@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seahorse Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="shortcut icon" href="#" />
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="canvas1"></canvas>
+      <div class="hero">
+         <div id="info">
+          <p>Use arrow keys for move. Press space bar for shooting. Press 'd' for debug mode and pause. Get more power by shooting or colliding with lucky fish. Win score over 100 in 100 seconds. Click to start!</p>
+        </div>
+      </div>
+      <button class="btn" id="replay">Try Again</button>
+    </div>
+    <!-- characters sprites -->
+    <img id="angler1" src="./SeaHorse/assets/angler1.png" />
+    <img id="angler2" src="./SeaHorse/assets/angler2.png" />
+    <img id="hive_whale" src="./SeaHorse/assets/hivewhale.png" />
+    <img id="drone" src="./SeaHorse/assets/drone.png" />
+    <img id="player" src="./SeaHorse/assets/seahorse.png" />
+    <img id="lucky" src="./SeaHorse/assets/lucky.png" />
+    <img id="shield" src="./SeaHorse/assets/shield.png" />
+    <img id="wolfkang_icon" src="./SeaHorse/assets/wolfkangicon.jpg" />
+
+    <!-- props -->
+    <img id="projectile" src="./SeaHorse/assets/projectile.png" />
+    <img id="fire_explosion" src="./SeaHorse/assets/fireExplosion.png" />
+    <img id="gears" src="./SeaHorse/assets/gears.png" />
+    <img id="smoke_explosion" src="./SeaHorse/assets/smokeExplosion.png" />
+    <!-- environment -->
+    <img id="layer2" src="./SeaHorse/assets/desert2.png" />
+    <!-- <img id="layer1" src="./SeaHorse/assets/undersea1.png" /> -->
+    <img id="layer1" src="./SeaHorse/assets/undersea_merzed.png" />
+    <img id="undersea2" src="./SeaHorse/assets/undersea2.png" />
+    <img id="layer3" src="./SeaHorse/assets/layer3.png" />
+    <img id="layer4" src="./SeaHorse/assets/layer4.png" />
+    <!-- <img id="undersea5" src="./SeaHorse/assets/undersea_3.png" height="500"/> -->
+    <img id="layer1_reverse" src="./SeaHorse/assets/undersea_3_reverse.png" height="500"/>
+    <!-- sounds -->
+    <audio id="power_up" src="./SeaHorse/assets/powerup.mp3"></audio>
+    <audio id="power_down" src="./SeaHorse/assets/powerdown.mp3"></audio>
+    <audio id="explosion" src="./SeaHorse/assets/explosion.mp3"></audio>
+    <audio id="shot" src="./SeaHorse/assets/hit.mp3"></audio>
+    <audio id="hit" src="./SeaHorse/assets/shot.mp3"></audio>
+    <audio id="laser" src="./SeaHorse/assets/laser_sound.mp3"></audio>
+    <audio id="bgm" src="./SeaHorse/assets/seahorseBGM.mp3"></audio>
+    <audio id="lucky_sound" src="./SeaHorse/assets/lucky.mp3"></audio>
+    <audio id="angler2_sound" src="./SeaHorse/assets/angler2.mp3"></audio>
+    <audio id="angler1_sound" src="./SeaHorse/assets/angler1.mp3"></audio>
+    <audio id="score" src="./SeaHorse/assets/score.mp3"></audio>
+    <audio id="smoke" src="./SeaHorse/assets/smoke.mp3"></audio>
+    <audio id="hive_whale_sound" src="./SeaHorse/assets/hivewhale.mp3"></audio>
+    <audio id="shield_sound" src="./SeaHorse/assets/shield.mp3"></audio>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
