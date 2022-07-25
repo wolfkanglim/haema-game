@@ -11,15 +11,109 @@
       href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="./style.css" />
-    <link rel="shortcut icon" href="#" />
+    <!-- <link rel="shortcut icon" href="#" /> -->
   </head>
   <body>
     <div class="container">
       <canvas id="canvas1"></canvas>
+      <!-- slide -->
+      <div id="presentation-area">
+        <section class="presentation">
+          <div class="slide show">
+            <div class="heading">
+              Dr.W <span class="nickname"> The weirdest robot scientist in the world</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="w" src="./SeaHorse/assets/wolfkangicon.jpg" width="100" />
+                <p> Dr.W terraforming a planet in galaxy. He sent all his creatures to transform. Incredibly they have inteligence to breed own species and they developed. Unpredictably some creatures gone bad. Will Haema survive? Or Dr.W planned it on purpose?                 
+                  Explore unknown planet called Wondrous K-529.
+                </p>            
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">
+              Haema <span class="nickname">(Hippocampus Rafinesque)  </span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="seahorseStill" src="./SeaHorse/assets/seahorse_still.png" width="100" />
+                <p>The ultimate intelligent robot shape like a seahorse. Length: 6Ft. This creatures can cut easily through the thick atmosphere of this planet, so they can fly.  Haema has 2000 secrets in body, hidden laser weapon in its tale is the one of the secret. Haema keep their babies in belly.
+                  observers note: Hsema loves music.
+                </p>            
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">
+              Gamulchiana <span class="nickname">(Channa argus)</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="angler1Still" src="./SeaHorse/assets/angler1_still.png" width="100" />
+               <p>Commom angler Horrible species like scavengers Aggressive. Homeworld: Planet 4153C(Mechanica) Habitat: Wind caves Length: 10Ft Locomotion: Floating Diet: Carnaibore Observers note: Built for hunt.  There are millions of them out there some where and everywhere</p>          
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">            
+              Sawkaliana <span class="nickname">(Siniperca scherzeri)</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="angler2Still" src="./SeaHorse/assets/angler2_still.png" width="100" />
+              <p>Typical ambush predators Habitat: Northern Hemisphere  Length: 16 -22ft One of kind robot fish, they have a internal combustion engine. carnivorous</p>
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">
+              Tetra Moonlight <span class="nickname">(Gymnocorymbus ternetzi)</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="luckyStill" src="./SeaHorse/assets/lucky_still.png" width="100" />
+              <p>Mode:Transgenesis
+                Method:	Insertion
+                Vector:	Multiple including green fluorescent protein.
+                Observers note: Enemy or friend? They are small and glow, but most powerful machine, they attack everything, but some for good.</p>            
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">
+              Hiver Whale :<span class="nickname">(Carcharodon carcharias)</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="hivewhaleStill" src="./SeaHorse/assets/hivewhale_still.png" width="100" />
+                <p>Status: Vulnerable
+                  Class: Chondrichthyes
+                  Length: 45 – 64Ft
+                  Gigantic warriors like aircraft carrier The most dangerous robot fish, huge strong seems like no one can kill. hiding drones in its ship.</p>            
+            </div>
+          </div>
+          <div class="slide">
+            <div class="heading">
+              Phagasarie:<span class="nickname">(Pseudobagrus fulvidraco)</span>
+            </div>
+            <div class="content grid center">
+              <img class="profile" id="droneStill" src="./SeaHorse/assets/drone_still.png" width="100" />
+                <p> The silent killer Micro type flying machine, high speed. killer like ninja.  razor-toothed carnivorous exaggerated reputation. never grow larger than 2 ft long. saw-edged bellies,strong jaws bearing sharp, triangular teeth a scissorlike bite.Never bite once, they bite countless.</p>          
+            </div>
+          </div>
+        </section>
+        <!-- counter -->
+        <section class="counter">
+          1of7
+        </section>
+        <!-- navigation -->
+        <section class="navigation">
+          <button id="left-btn" class="nav-btn">
+            <i class="fas fa-solid fa-caret-left"></i>
+          </button>      
+          <button id="right-btn" class="nav-btn">
+            <i class="fa-solid fa-caret-right"></i>
+          </button>    
+        </section>
+      </div>
+      <!-- info -->
       <div class="hero">
          <div id="info">
-          <p>Use arrow keys for move. Press space bar for shooting. Press 'd' for debug mode and pause. Get more power by shooting or colliding with lucky fish. Win score over 100 in 100 seconds. Click to start!</p>
+          <p>Use arrow keys for move. Press space bar for shooting. Press 'd' for debug mode and pause. Get more power by shooting or colliding with lucky fish. Win score over 100 in 100 seconds. <br> Click to start!</p>
         </div>
       </div>
       <button class="btn" id="replay">Try Again</button>
@@ -33,21 +127,24 @@
     <img id="lucky" src="./SeaHorse/assets/lucky.png" />
     <img id="shield" src="./SeaHorse/assets/shield.png" />
     <img id="wolfkang_icon" src="./SeaHorse/assets/wolfkangicon.jpg" />
+    <img id="angler1_still" src="./SeaHorse/assets/angler1_still.png" />
+    <img id="angler2_still" src="./SeaHorse/assets/angler2_still.png" />
+    <img id="hivewhale_still" src="./SeaHorse/assets/hivewhale_still.png" />
+    <img id="drone_still" src="./SeaHorse/assets/drone_still.png" />
+    <img id="player_still" src="./SeaHorse/assets/seahorse_still.png" />
+    <img id="lucky_still" src="./SeaHorse/assets/lucky_still.png" />
+   
 
     <!-- props -->
     <img id="projectile" src="./SeaHorse/assets/projectile.png" />
     <img id="fire_explosion" src="./SeaHorse/assets/fireExplosion.png" />
     <img id="gears" src="./SeaHorse/assets/gears.png" />
     <img id="smoke_explosion" src="./SeaHorse/assets/smokeExplosion.png" />
+    
     <!-- environment -->
-    <img id="layer2" src="./SeaHorse/assets/desert2.png" />
-    <!-- <img id="layer1" src="./SeaHorse/assets/undersea1.png" /> -->
     <img id="layer1" src="./SeaHorse/assets/undersea_merzed.png" />
-    <img id="undersea2" src="./SeaHorse/assets/undersea2.png" />
     <img id="layer3" src="./SeaHorse/assets/layer3.png" />
-    <img id="layer4" src="./SeaHorse/assets/layer4.png" />
-    <!-- <img id="undersea5" src="./SeaHorse/assets/undersea_3.png" height="500"/> -->
-    <img id="layer1_reverse" src="./SeaHorse/assets/undersea_3_reverse.png" height="500"/>
+
     <!-- sounds -->
     <audio id="power_up" src="./SeaHorse/assets/powerup.mp3"></audio>
     <audio id="power_down" src="./SeaHorse/assets/powerdown.mp3"></audio>
@@ -63,6 +160,7 @@
     <audio id="smoke" src="./SeaHorse/assets/smoke.mp3"></audio>
     <audio id="hive_whale_sound" src="./SeaHorse/assets/hivewhale.mp3"></audio>
     <audio id="shield_sound" src="./SeaHorse/assets/shield.mp3"></audio>
+    <audio id="slide_sound" src="./SeaHorse/assets/slide.mp3"></audio>
 
     <script src="./script.js"></script>
   </body>
