@@ -2,14 +2,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: all 0.8s ease;
 }
 .container {
     font-family: 'Righteous', cursive;
-    background-color: rgb(60, 189, 215);
-    margin: 10px;
+    background-color: rgb(60, 18, 21);
+    margin: 1px;
     /* position: relative; */
-    /* max-width: 100%;
-    max-height: 100vh; */
+    max-width: 100%;
+    height: 96vh;
 }
 h1 {
     color: white;
@@ -18,12 +19,12 @@ h1 {
 #canvas1 {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -54%);
     max-width: 96%;
     max-height: 96%;
     border: 7px solid #222;
     border-radius: 14px;
-    background-color: cyan;
+    background-color: rgb(62, 248, 248);
     background-image: url(./SeaHorse/assets/undersea_3.png);
     background-size: cover;
     position: absolute;
@@ -31,18 +32,18 @@ h1 {
 }
 .hero {
     position: absolute;
-    top: 55%;
+    top: 59%;
     left: 50%;
-    transform: translate(-50%, 20%);
+    transform: translate(-50%, 30%);
     width: 70%;
     min-width: 400px;
-    height: 18%;  
+    max-height: 14.5%;  
     background-color: rgba(4, 4, 4, 0.7);
     border: 2px solid #fff;
     border-radius: 5px;
 }
 #info {
-    font-size: 16px;
+    font-size: 12px;
     text-align: justify;
     color: #fff;
     padding: 6px;
@@ -59,7 +60,7 @@ h1 {
 #info.moveout {
     display: none;
 }
-#player, #angler1, #angler2, #drone, #fire_explosion, #gears, #hive_whale, #layer1, #layer2, #layer3, #layer4, #lucky, #projectile, #seahorse, #layer1_reverse, #smoke_explosion, #shield, #undersea2, #wolfkang_icon {
+#player, #angler1, #angler2, #drone, #fire_explosion, #gears, #hive_whale, #layer1, #layer2, #layer3, #layer4, #lucky, #projectile, #seahorse, #layer1_reverse, #smoke_explosion, #shield, #undersea2, #wolfkang_icon, #angler1_still, #angler2_still, #drone_still, #hivewhale_still, #lucky_still, #player_still {
     display: none;
 }
 .btn {
@@ -86,3 +87,103 @@ h1 {
 #replay.show {
     display: block;
 }
+/* slide show */
+#presentation-area {
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 450px;
+    height: 168px;
+    position: relative;
+    background: purple;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+  #presentation-area .presentation {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #3d45e6;
+    
+    border-radius: 10px;
+    position: relative;
+  }
+  #presentation-area .counter {
+    position: absolute;
+    bottom: 2px;
+    left: 5px;
+    color: #0c0002;
+  }
+  
+  #presentation-area .navigation {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    z-index: 15;
+  }
+  .navigation button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    outline: none;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .navigation .nav-btn {
+    background: #020202;
+    color: #ffffff;
+    border-radius: 0.2rem;
+    opacity: 0.7;
+    transform: scale(0);
+  }
+  .navigation .nav-btn.show {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
+   
+  .presentation .content.grid {
+    display: flex;
+    align-items: flex-start;
+  }
+ 
+  .content p {
+    padding: 5px;
+    font-size: 0.9em;
+    margin-bottom: 0.3rem;
+  }
+  
+  .presentation .slide {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: #fbf7f7;
+    opacity: 0;
+    transform: scale(0);
+    visibility: none;
+  }
+  
+  .slide.show {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
+  
+  .slide .heading {
+    padding: 0.3rem;
+    background: rgb(155, 5, 155);
+    font-size: 1.15em;
+    font-weight: bold;
+    color: #ffffff;
+  }
+ 
+  .nickname {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
