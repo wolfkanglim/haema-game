@@ -1,9 +1,101 @@
 window.addEventListener('load', init());
 
+//slide show get elements
+let presentation = document.querySelector(".presentation");
+let slides = document.querySelectorAll(".slide");
+let currentSlide = document.querySelector(".slide.show");
+const slide_sound = document.getElementById('slide_sound');
+
+let slideNumber = document.querySelector(".counter");
+let toLeftBtn = document.querySelector("#left-btn");
+let toRightBtn = document.querySelector("#right-btn");
+let presentationController = document.querySelector("#presentation-area");
+
+// initialize default values//
+var screenStatus = 0;
+var currentSlideNo = 1;
+var totalSides = 0;
+
+setup();
+
+function setup() {
+  getCurrentSlideNo();
+  totalSides = slides.length;
+  setSlideNo();
+  hideLeftButton();
+  hideRightButton();
+  slide_sound.currentTime = 0;
+  slide_sound.volume = 0.12;
+  slide_sound.play();
+}
+
+// handle clicks on left and right icons
+toLeftBtn.addEventListener("click", moveToLeftSlide);
+toRightBtn.addEventListener("click", moveToRightSlide);
+
+// hide left button at first page
+function hideLeftButton() {
+  if (currentSlideNo == 1) {
+    toLeftBtn.classList.remove("show");
+  } else {
+    toLeftBtn.classList.add("show");
+  }
+}
+
+// hide right button at last page
+function hideRightButton() {
+  if (currentSlideNo === totalSides) {
+    toRightBtn.classList.remove("show");
+  } else {
+    toRightBtn.classList.add("show");
+  }
+}
+
+// moves to left slide
+function moveToLeftSlide() {
+  var tempSlide = currentSlide;
+  currentSlide = currentSlide.previousElementSibling;
+  tempSlide.classList.remove("show");
+  currentSlide.classList.add("show");
+
+  setup();
+}
+
+// moves to right slide
+function moveToRightSlide() {
+  var tempSlide = currentSlide;
+  currentSlide = currentSlide.nextElementSibling;
+  tempSlide.classList.remove("show");
+  currentSlide.classList.add("show");
+
+  setup();
+}
+
+// get current slide
+function getCurrentSlideNo() {
+  let counter = 0;
+
+  slides.forEach((slide, i) => {
+    counter++;
+
+    if (slide.classList.contains("show")) {
+      currentSlideNo = counter;
+    }
+  });
+}
+
+// update counter
+function setSlideNo() {
+  slideNumber.innerText = `${currentSlideNo} of ${totalSides}`;
+}
+
+
+///// start game //////
+
 function init(){    
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
-    canvas.width = 900;
+    canvas.width = 800;
     canvas.height = 500;
    
     const hero = document.querySelector('.hero');
@@ -11,19 +103,21 @@ function init(){
     const playerStill = document.getElementById('player');
     const wolfkang = document.getElementById('wolfkang_icon');
     const replayBtn = document.getElementById('replay'); 
+    const presentationArea = document.getElementById('presentation-area');
     ctx.drawImage(wolfkang, 10, 10, 50, 50);
     ctx.save();
     ctx.drawImage(hiveWhaleStill, 0, 0, 400, 227, 410, 120, 400, 227);
     ctx.drawImage(playerStill, 0, 0, 120, 190, 80, 100, 120, 190);
-    ctx.fillStyle = '#232621';
+    ctx.fillStyle = '#fff';
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 4;
-    ctx.shadowColor = 'white'
+    ctx.shadowColor = '#222';
     ctx.font = ' 60px Righteous';
-    ctx.fillText('H A E M A  *  ㅎㅐㅁㅏ', 160, 100);
+    ctx.fillText('H A E M A  *  ㅎㅐㅁㅏ', 100, 65);
      ctx.restore();
     hero.addEventListener('click', function() {
         hero.style.display = 'none';  
+        presentationArea.style.display = 'none';
         if(game.gameOver){
             game.gameTimer = 0;
             game.score = 0;
@@ -476,14 +570,9 @@ function init(){
         constructor(game){
             this.game = game;
             this.image1 = document.getElementById('layer1');
-            this.image2 = document.getElementById('layer2');
             this.image3 = document.getElementById('layer3');
-            this.image4 = document.getElementById('layer4');
             this.layer1 = new Layer(this.game, this.image1, 0.03);
-            this.layer2 = new Layer(this.game, this.image2, 0.05);
             this.layer3 = new Layer(this.game, this.image3, 0.07);
-            this.layer4 = new Layer(this.game, this.image4, 0.1);
-            //this.layers = [this.layer1, this.layer2, this.layer3, this.layer4];
             this.layers = [this.layer1, this.layer3];
         }
         update(){
@@ -712,13 +801,13 @@ function init(){
     
         addEnemy() {
             const randomNumber = Math.random();
-            if(randomNumber < 0.3) {
+            if(randomNumber < 0.4) {
                 this.enemies.push(new Angler1(this));
                 this.sound.angler1();
-            } else if(randomNumber < 0.6) {
+            } else if(randomNumber < 0.7) {
                 this.enemies.push(new Angler2(this));
                 this.sound.angler1();
-            } else if(randomNumber < 0.7) {
+            } else if(randomNumber < 0.8) {
                 this.enemies.push(new HiveWhale(this));
                 this.sound.HiveWhale();
             } else {
