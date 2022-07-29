@@ -5,7 +5,6 @@ let presentation = document.querySelector(".presentation");
 let slides = document.querySelectorAll(".slide");
 let currentSlide = document.querySelector(".slide.show");
 const slide_sound = document.getElementById('slide_sound');
-
 let slideNumber = document.querySelector(".counter");
 let toLeftBtn = document.querySelector("#left-btn");
 let toRightBtn = document.querySelector("#right-btn");
@@ -57,7 +56,6 @@ function moveToLeftSlide() {
   currentSlide = currentSlide.previousElementSibling;
   tempSlide.classList.remove("show");
   currentSlide.classList.add("show");
-
   setup();
 }
 
@@ -67,17 +65,14 @@ function moveToRightSlide() {
   currentSlide = currentSlide.nextElementSibling;
   tempSlide.classList.remove("show");
   currentSlide.classList.add("show");
-
   setup();
 }
 
 // get current slide
 function getCurrentSlideNo() {
   let counter = 0;
-
   slides.forEach((slide, i) => {
     counter++;
-
     if (slide.classList.contains("show")) {
       currentSlideNo = counter;
     }
@@ -90,7 +85,7 @@ function setSlideNo() {
 }
 
 
-///// start game //////
+///// start game //////////////////////
 
 function init(){    
     const canvas = document.getElementById('canvas1');
@@ -117,28 +112,18 @@ function init(){
      ctx.restore();
     hero.addEventListener('click', function() {
         hero.style.display = 'none';  
-        presentationArea.style.display = 'none';
-        if(game.gameOver){
-            game.gameTimer = 0;
-            game.score = 0;
-            game.speed = 1;
-            game.ammo = 20;
-            game.gameTime = 0;
-            game.gameOver = false;
-        }
+        presentationArea.style.display = 'none';       
         animation(0);      
     })
     replayBtn.addEventListener('click', () => {
-        if(game.gameOver){
-            game.gameTimer = 0;
+        game.player.x = 150;
+        game.player.y = 100;
             game.score = 0;
-            game.speed = 1;
             game.ammo = 20;
             game.gameTime = 0;
+            game.enemies = [];
             game.gameOver = false;
             replayBtn.classList.remove('show');
-        }
-        init();      
     })          
 
     class InputHandler {
@@ -290,6 +275,38 @@ function init(){
         }
     }
 
+    class FireBall {
+        constructor(game, x, y){
+            this.game = game;
+            this.x = x;
+            this.y = y;
+            this.speed = 3;
+            this.width = 36.25;
+            this.height = 20;
+            this.frameX = 0;
+            this.maxFrame = 3;
+            this.markedForDeletion = false;
+            this.image = document.getElementById('fireBall');
+            this.fps = 15;
+            this.timer = 0;
+            this.interval = 1000 / this.fps;
+        }
+        update(){
+            this.x += this.speed;            
+            if(this.frameX  < this.maxFrame){
+                this.frameX++;
+                this.timer = 0;
+            } else {
+                this.frameX = 0;            
+            }
+            if(this.x >= this.game.width * 0.9){
+                this.markedForDeletion = true;
+            }
+        }
+        draw(context){
+            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height * 0.5)
+        }
+    }
 
     class Projectile {
         constructor(game, x, y){
@@ -358,8 +375,8 @@ function init(){
             this.game = game;
             this.width = 120;
             this.height = 190;
-            this.x = 20;
-            this.y = 200;
+            this.x = 150;
+            this.y = 100;
             this.frameX = 0;
             this.frameY = 0;
             this.maxFrame = 37;
@@ -422,7 +439,7 @@ function init(){
         }
         shootTop(){ 
             if(this.game.ammo > 0){
-                this.projectiles.push(new Projectile(this.game, this.x + 70  , this.y + 20   ));
+                this.projectiles.push(new FireBall(this.game, this.x + 64  , this.y + 19));
                 this.game.ammo--;
             }
             this.game.sound.shot();
@@ -483,6 +500,18 @@ function init(){
         }
     }
 
+    class Stalker extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 243;
+            this.height = 123;
+            this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
+            this.image = document.getElementById('stalker');
+            this.lives = 5;
+            this.score = this.lives;
+        }
+    }
+
     class Angler2 extends Enemy {
         constructor(game) {
             super(game);
@@ -491,6 +520,18 @@ function init(){
             this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
             this.image = document.getElementById('angler2');
             this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 7;
+            this.score = this.lives;
+        }
+    }
+
+    class RazorFin extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 187;
+            this.height = 149;
+            this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
+            this.image = document.getElementById('razorFin');
             this.lives = 7;
             this.score = this.lives;
         }
@@ -522,8 +563,7 @@ function init(){
             this.lives = 10;
             this.score = this.lives;
             this.type = 'lucky';
-        }
-        
+        }        
     }
 
     class Drone extends Enemy {
@@ -543,12 +583,38 @@ function init(){
         }
     }
 
+    class BulbWhale extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 270;
+            this.height = 219;
+            this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
+            this.image = document.getElementById('bulbWhale');
+            this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 20;
+            this.score = this.lives;
+            this.speedX = Math.random() * -0.6 - 0.3;
+            this.type = 'bulb';
+        }
+    }
+
+    class MoonFish extends Enemy {
+        constructor(game) {
+            super(game);
+            this.width = 227;
+            this.height = 240;
+            this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
+            this.image = document.getElementById('moonFish');
+            this.lives = 10;
+            this.score = this.lives;
+            this.type = 'moon';
+        }
+    }
 
     class Layer {
         constructor(game, image, speedModifier) {
             this.game = game;
-            this.image = image;
-            
+            this.image = image;            
             this.speedModifier = speedModifier;
             this.x = 0;
             this.y = 0;
@@ -593,9 +659,9 @@ function init(){
             this.spriteHeight = 200;
             this.width = this.spriteWidth;
             this.height = this.spriteHeight;
-            this.x = x + this.width/2;
-            this.y = y + this.height/2;
-            this.fps = 5;    
+            this.x = x - this.width/2;
+            this.y = y - this.height/2;
+            this.fps = 15;    
             this.timer = 0;
             this.interval = 1000/this.fps;
             this.markedForDeletion = false;
@@ -606,7 +672,6 @@ function init(){
             if(this.timer > this.interval){
                 this.frameX++;
                 this.timer = 0;
-
             } else {
                 this.timer += deltaTime;
             }
@@ -699,7 +764,7 @@ function init(){
             this.ammoTimer = 0;
             this.ammoInterval = 350;
             this.gameOver = false;
-            this.timeLimit = 100000;
+            this.timeLimit = 60000;
             this.debug = false;
             this.speed = 1;
             this.score = 0;
@@ -716,7 +781,6 @@ function init(){
                 this.gameOver = true;
                 this.sound.powerDown();
                 replayBtn.classList.add('show');
-
             }
             this.background.update();
             this.player.update(deltaTime);
@@ -742,12 +806,10 @@ function init(){
                     for(let i = 0; i < 5; i++){
                         this.particles.push(new Particle(this, enemy.x + Math.random() * enemy.width * 0.5, enemy.y + Math.random() * enemy.height * 0.5));
                     }
-                    //this.addExplosion(enemy);
-                    this.explosions.push(new SmokeExplosion(this, enemy.x + enemy.width, enemy.y + enemy.height));
+                    this.explosions.push(new SmokeExplosion(this, enemy.x + enemy.width / 4, enemy.y + enemy.height / 4));
                     this.sound.powerDown();
                     this.shield.reset();
-                    this.particles.push(new Particle(this, enemy.x + enemy.width / 2, enemy.y + enemy.height / 2));
-                    if(enemy.type === 'lucky') {
+                    if(enemy.type === 'lucky' || enemy.type === 'bulb') {
                         this.player.enterPowerUp();
                         this.sound.lucky();
                     } else if(!this.gameOver) this.score -= enemy.score;
@@ -764,8 +826,7 @@ function init(){
                             for(let i = 0; i < 10; i++){
                                 this.particles.push(new Particle(this, enemy.x + Math.random() * enemy.width * 0.5, enemy.y + Math.random() * enemy.height * 0.5));
                             }
-                            this.explosions.push(new FireExplosion(this, enemy.x + enemy.width/2, enemy.y + enemy.height/2));
-                            //this.addExplosion(enemy);
+                            this.explosions.push(new FireExplosion(this, enemy.x + enemy.width/4, enemy.y + enemy.height/4));
                             this.sound.explosion();
                             if(enemy.type === 'lucky') this.player.enterPowerUp();
                             if(enemy.type === 'hive'){
@@ -801,36 +862,39 @@ function init(){
     
         addEnemy() {
             const randomNumber = Math.random();
-            if(randomNumber < 0.4) {
+            if(randomNumber < 0.15) {
                 this.enemies.push(new Angler1(this));
                 this.sound.angler1();
-            } else if(randomNumber < 0.7) {
+            } else if(randomNumber < 0.3) {
                 this.enemies.push(new Angler2(this));
                 this.sound.angler1();
-            } else if(randomNumber < 0.8) {
+            } else if(randomNumber < 0.45) {
+                this.enemies.push(new Stalker(this));
+                this.sound.angler1();
+            } else if(randomNumber < 0.6) {
+                this.enemies.push(new RazorFin(this));
+                this.sound.angler1();
+            } else if(randomNumber < 0.65) {
+                this.enemies.push(new BulbWhale(this));
+                this.sound.HiveWhale();
+            } else if(randomNumber < 0.7) {
                 this.enemies.push(new HiveWhale(this));
                 this.sound.HiveWhale();
+            } else if(randomNumber < 0.85) {
+                this.enemies.push(new MoonFish(this));
+                this.sound.score();
             } else {
                 this.enemies.push(new LuckyFish(this));
                 this.sound.score();
             }
         };
 
-        addExplosion(enemy){
-            const randomNumber2 = Math.random();
-            if(randomNumber2 < 0.5) {
-                this.explosions.push(new SmokeExplosion(this, enemy.x + enemy.width/2, enemy.y + enemy.height/2));
-            } else {
-                this.explosions.push(new FireExplosion(this, enemy.x + enemy.width/2, enemy.y + enemy.height/2)); 
-            }
-        }
-
         checkCollision(obj1, obj2){
             return (
-                obj1.x < obj2.x + obj2.width * 0.5 && 
-                obj1.x + obj1.width * 0.5 > obj2.x &&
-                obj1.y < obj2.y + obj2.height * 0.5 &&
-                obj1.y + obj1.height * 0.5> obj2.y
+                obj1.x < obj2.x + obj2.width * 0.4 && 
+                obj1.x + obj1.width * 0.45 > obj2.x &&
+                obj1.y < obj2.y + obj2.height * 0.4 &&
+                obj1.y + obj1.height * 0.45> obj2.y
             )
         }                     
     };
