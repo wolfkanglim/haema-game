@@ -5,13 +5,13 @@ let presentation = document.querySelector(".presentation");
 let slides = document.querySelectorAll(".slide");
 let currentSlide = document.querySelector(".slide.show");
 const slide_sound = document.getElementById('slide_sound');
-let slideNumber = document.querySelector(".counter");
+let slideNumber = document.querySelector(".counter");//
 let toLeftBtn = document.querySelector("#left-btn");
 let toRightBtn = document.querySelector("#right-btn");
 let presentationController = document.querySelector("#presentation-area");
 
 // initialize default values//
-var screenStatus = 0;
+var mouseStatus = 0;
 var currentSlideNo = 1;
 var totalSides = 0;
 
@@ -152,7 +152,10 @@ function init(){
                 }
             })
         }
+        
+      
     }
+  
 
     class SoundController {
         constructor(){
@@ -267,7 +270,7 @@ function init(){
             }
         }
         draw(context){
-            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.game.player.x, this.game.player.y, this.width, this.height);
+            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.game.player.x + 12, this.game.player.y - 10, this.width * 0.7, this.height * 0.7);
         }
         reset(){
             this.frameX = 0;
@@ -369,12 +372,41 @@ function init(){
         }
     }
 
+  
+    //mouse click and touch screen shooting and move/////
+    const mousePos = {
+        x: 150,
+        y: 100,
+        click: false
+    }
+    const shootingRect = {
+        x: 0,
+        y: canvas.height * 0.88,
+        width: canvas.width,
+        height: canvas.height * 0.12,
+        click: false
+    }     
+    let canvasPos = canvas.getBoundingClientRect();
+    canvas.addEventListener('click', function (ev){
+        ev.preventDefault();
+        mousePos.x = ev.x - canvasPos.left - 20;
+        mousePos.y = ev.y - canvasPos.top - 20; 
+        if(IsIn(mousePos, shootingRect)){
+            game.player.shootTop();
+        }
+    })
+    function IsIn(pos, rect){
+        return pos.x > rect.x && pos.x < rect.x + rect.width &&   pos.y > rect.y && pos.y < rect.y + rect.height; 
+    }
+    ////////////////////////
 
     class Player {
         constructor(game){
             this.game = game;
-            this.width = 120;
-            this.height = 190;
+            this.spriteWidth = 120;
+            this.spriteHeight = 190;
+            this.width = this.spriteWidth * 0.5;
+            this.height = this.spriteHeight * 0.5;
             this.x = 150;
             this.y = 100;
             this.frameX = 0;
@@ -388,25 +420,45 @@ function init(){
             this.powerUpTimer = 0;
             this.powerUpLimit = 10000;
             this.image = document.getElementById('player');
+            this.name = 'HAEMA';
         }
         update(deltaTime){
+            //////mouse click and touch screen /////
+            if(mousePos.click = true  && !IsIn(mousePos, shootingRect)){
+                const dx = game.player.x - mousePos.x ;
+                const dy = game.player.y - mousePos.y;
+                if(mousePos.x != game.player.x){
+                    game.player.x -= dx / 30;
+                }
+                if(mousePos.y != game.player.y){
+                    game.player.y -= dy / 20;
+                }
+                mousePos.click = false;
+            }
+            //////////////////////////////////
+
             if(this.game.keys.includes('ArrowDown')) {this.speedY = this.maxSpeed;
             } else if (this.game.keys.includes('ArrowUp')) {
-                    this.speedY = - this.maxSpeed;
+                 this.speedY = - this.maxSpeed;
             } else if (this.game.keys.includes('ArrowRight')) {
                 this.speedX = this.maxSpeed;
             } else if (this.game.keys.includes('ArrowLeft')) {
-                this.speedX = - this.maxSpeed * 0.7;
+                this.speedX = - this.maxSpeed;
             } else {
                 (this.speedY = 0);
                 this.speedX = 0;
             }
-            this.y += this.speedY;
+        
             this.x += this.speedX;      
-            if(this.y > this.game.height - this.height / 4) this.y = this.game.height - this.height / 4;
+            this.y += this.speedY;
+            
+            if(this.y > canvas.height - this.height / 4) this.y = this.game.height - this.height / 4;
             if(this.y < - this.height / 2) this.y = - this.height / 2;
             if(this.x > this.game.width - this.width / 2) this.x = this.game.width - this.width / 2;
             if(this.x < - this.width / 2) this.x = - this.width / 2;
+
+           
+
             this.projectiles.forEach(projectile => {
                 projectile.update();
             });
@@ -428,26 +480,31 @@ function init(){
                     this.game.ammo += 0.1;
                 }
             }
-        }
-
+        
+        
+        }   
         draw(context){
-            if(this.game.debug) context.strokeRect(this.x, this.y, this.width * 0.75, this.height * 0.7);
+            if(this.game.debug) {
+                context.strokeStyle = 'red';
+                context.strokeRect(this.x, this.y, this.width * 0.85, this.height * 0.85);
+            }
             this.projectiles.forEach(projectile => {
                 projectile.draw(context);
             })
-            context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width * 0.75, this.height * 0.7);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
         }
         shootTop(){ 
             if(this.game.ammo > 0){
-                this.projectiles.push(new FireBall(this.game, this.x + 64  , this.y + 19));
+                this.projectiles.push(new FireBall(this.game, this.x + 32  , this.y + 12));
                 this.game.ammo--;
+                this.game.sound.shot();
             }
-            this.game.sound.shot();
+            
             if(this.powerUp) this.shootBottom();
         }
         shootBottom(){
             if(this.game.ammo > 0){
-                this.projectiles.push(new Projectile(this.game, this.x + 75, this.y + 120))
+                this.projectiles.push(new Projectile(this.game, this.x + 42, this.y + 85 ))
                 this.game.sound.laser();
             }
         }
@@ -478,10 +535,16 @@ function init(){
             } else this.frameX = 0;
         }
         draw(context){
-            if(this.game.debug) context.strokeRect(this.x, this.y, this.width/2, this.height/2);
+            if(this.game.debug) {
+                context.strokeStyle = 'red';
+                context.lineWidth = 3;
+                context.strokeRect(this.x, this.y, this.width/2, this.height/2);
+            }
             context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width/2, this.height/2);
             if(this.game.debug) {
-                context.font = '25px Helvetica';
+                context.fillStyle = '#fff';
+                context.font = '14px Helvetica';
+                context.fillText(this.name, this.x + 20, this.y);
                 context.fillText(this.lives, this.x, this.y);
             }
         }
@@ -496,6 +559,7 @@ function init(){
             this.image = document.getElementById('angler1');
             this.frameY = Math.floor(Math.random() * 3);
             this.lives = 5;
+            this.name = 'Gamulchiana';
             this.score = this.lives;
         }
     }
@@ -508,6 +572,7 @@ function init(){
             this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
             this.image = document.getElementById('stalker');
             this.lives = 5;
+            this.name = 'Jangtunger';
             this.score = this.lives;
         }
     }
@@ -521,6 +586,7 @@ function init(){
             this.image = document.getElementById('angler2');
             this.frameY = Math.floor(Math.random() * 2);
             this.lives = 7;
+            this.name = 'Sawkaliana';
             this.score = this.lives;
         }
     }
@@ -533,6 +599,7 @@ function init(){
             this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
             this.image = document.getElementById('razorFin');
             this.lives = 7;
+            this.name = 'Kalnabjaru';
             this.score = this.lives;
         }
     }
@@ -546,6 +613,7 @@ function init(){
             this.image = document.getElementById('hive_whale');
             this.frameY = 0;
             this.lives = 20;
+            this.name = 'MC88 Hive';
             this.score = this.lives;
             this.type = 'hive';
             this.speedX = Math.random() * -0.5 - 0.2;
@@ -561,6 +629,7 @@ function init(){
             this.image = document.getElementById('lucky');
             this.frameY = Math.floor(Math.random() * 2);
             this.lives = 10;
+            this.name = 'Moramuchi';
             this.score = this.lives;
             this.type = 'lucky';
         }        
@@ -577,6 +646,7 @@ function init(){
             this.image = document.getElementById('drone');
             this.frameY = Math.floor(Math.random() * 2);
             this.lives = 3;
+            this.name = 'Phagasarie';
             this.score = this.lives;
             this.speedX = Math.random() * -4 - 0.5;
             this.type = 'drone';
@@ -592,6 +662,7 @@ function init(){
             this.image = document.getElementById('bulbWhale');
             this.frameY = Math.floor(Math.random() * 2);
             this.lives = 20;
+            this.name = 'Bulwinger';
             this.score = this.lives;
             this.speedX = Math.random() * -0.6 - 0.3;
             this.type = 'bulb';
@@ -606,6 +677,7 @@ function init(){
             this.y = Math.random() * (this.game.height * 0.95 -this.height / 2);
             this.image = document.getElementById('moonFish');
             this.lives = 10;
+            this.name = 'Tetra Moonlight';
             this.score = this.lives;
             this.type = 'moon';
         }
@@ -820,6 +892,7 @@ function init(){
                     if(this.checkCollision(projectile, enemy)){
                         this.sound.hit();
                         enemy.lives--;
+                        if(!this.gameOver) this.score++;
                         projectile.markedForDeletion = true;
                         if(enemy.lives <= 0){
                             enemy.markedForDeletion = true;
@@ -828,14 +901,14 @@ function init(){
                             }
                             this.explosions.push(new FireExplosion(this, enemy.x + enemy.width/4, enemy.y + enemy.height/4));
                             this.sound.explosion();
-                            if(enemy.type === 'lucky') this.player.enterPowerUp();
+                            if(enemy.type === 'lucky' || enemy.type === 'moon') this.player.enterPowerUp();
                             if(enemy.type === 'hive'){
                                 for(let i = 0; i < 5; i++){
                                     this.enemies.push(new Drone(this, enemy.x + enemy.width * 0.5, enemy.y + Math.random() * enemy.height * 0.5));
                                 }
                                 this.sound.angler2();
                             }
-                            if(!this.gameOver) this.score += enemy.score;
+                            //if(!this.gameOver) this.score += enemy.score;
                             this.sound.lucky();
                         }
                     }
