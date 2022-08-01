@@ -23,9 +23,9 @@ function setup() {
   setSlideNo();
   hideLeftButton();
   hideRightButton();
-  slide_sound.currentTime = 0;
-  slide_sound.volume = 0.12;
-  slide_sound.play();
+  //slide_sound.currentTime = 0;
+  //slide_sound.volume = 0.12;
+  //slide_sound.play();
 }
 
 // handle clicks on left and right icons
