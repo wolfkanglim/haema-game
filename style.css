@@ -33,7 +33,7 @@ h1 {
     transform: translate(-50%, -50%);
     max-width: 100%;
     max-height: 100vh;
-    border: 7px solid #222;
+    border: 6px solid #222;
     border-radius: 14px;
     background-color: rgb(62, 248, 248);
     background-image: url(./assets/undersea_3.jpg);
@@ -43,13 +43,13 @@ h1 {
 }
 .hero {
     position: absolute;
-    top: 57%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, 30%);
-    width: 70%;
+    width: 75%;
     height: 14.5%;  
     background-color: rgba(4, 4, 4, 0.7);
-    border: 2px solid #fff;
+    border: 1px solid #fff;
     border-radius: 5px;
 }
 #info {
@@ -65,7 +65,11 @@ h1 {
     justify-content: center; */
     text-shadow: 1px 1px 0 #222;
     pointer-events: none;
+    cursor: pointer;
     z-index: 10;
+}
+.hero:hover {
+    border: 2px solid #fff;
 }
 #info.moveout {
     display: none;
@@ -124,27 +128,30 @@ h1 {
     position: absolute;
     bottom: 2px;
     left: 5px;
-    color: #0c0002;
+    background-color: #0c0002;
+    color: #fff;
+    font-size: 0.7rem;
   }
   
   #presentation-area .navigation {
     position: absolute;
-    bottom: 2px;
-    right: 5px;
+    bottom: 1x;
+    left: 50%;
     z-index: 15;
   }
   .navigation button {
-    width: 20px;
-    height: 20px;
+    width: 22x;
+    height: 22x;
     border: none;
     outline: none;
     margin-left: 0.5rem;
     font-size: 1rem;
-    line-height: 25px;
+    line-height: 22x;
     text-align: center;
     cursor: pointer;
   }
-  
+  .navigation button:hover{
+      border: 2px solid #fff;
   .navigation .nav-btn {
     background: #020202;
     color: #ffffff;
