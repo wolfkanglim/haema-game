@@ -430,7 +430,7 @@ function init(){
         }
         update(deltaTime){
             //////mouse click and touch screen /////
-            if(mousePos.click = true  && !IsIn(mousePos, shootingRect)){
+           /* if(mousePos.click = true  && !IsIn(mousePos, shootingRect)){
                 const dx = game.player.x - mousePos.x ;
                 const dy = game.player.y - mousePos.y;
                 if(mousePos.x != game.player.x){
@@ -440,7 +440,7 @@ function init(){
                     game.player.y -= dy / 20;
                 }
                 mousePos.click = false;
-            }
+            } */
             //////////////////////////////////
 
             if(this.game.keys.includes('ArrowDown')) {this.speedY = this.maxSpeed;
