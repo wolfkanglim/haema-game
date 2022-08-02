@@ -16,8 +16,6 @@ var mouseStatus = 0;
 var currentSlideNo = 1;
 var totalSides = 0;
 
-setup();
-
 function setup() {
   getCurrentSlideNo();
   totalSides = slides.length;
@@ -28,6 +26,7 @@ function setup() {
   slide_sound.volume = 0.15;
   slide_sound.play(); 
 }
+setup();
 
 // handle clicks on left and right icons
 toLeftBtn.addEventListener("click", moveToLeftSlide);
