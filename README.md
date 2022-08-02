@@ -14,11 +14,12 @@ Make introduction slide show for characters.
 Dr. W who created incredible terraforming planet world.
 Use underwater as a background.
 Adjust size bit smaller.
+Amazing audio effects sounds from ableton live.
+
+### Working on 
 Add click event for move and shooting.
 Touch screen player move, touch bottom black area for shooting.
 Responsive web design.
-Amazing audio effects sounds from ableton live.
-
 
 ### What's next
 Mobile game app. 
