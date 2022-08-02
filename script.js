@@ -101,8 +101,8 @@ function init(){
     const presentationArea = document.getElementById('presentation-area');
     ctx.drawImage(wolfkang, 10, 10, 50, 50);
     ctx.save();
-    ctx.drawImage(hiveWhaleStill, 0, 0, 400, 227, 410, 120, 400, 227);
-    ctx.drawImage(playerStill, 0, 0, 120, 190, 80, 100, 120, 190);
+    //ctx.drawImage(hiveWhaleStill, 0, 0, 400, 227, 410, 120, 400, 227);
+    //ctx.drawImage(playerStill, 0, 0, 120, 190, 80, 100, 120, 190);
     ctx.fillStyle = '#fff';
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 4;
