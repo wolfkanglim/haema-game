@@ -26,6 +26,7 @@ function setup() {
   //slide_sound.currentTime = 0;
   //slide_sound.volume = 0.12;
   //slide_sound.play();
+  game.sound.Angler1();
 }
 
 // handle clicks on left and right icons
