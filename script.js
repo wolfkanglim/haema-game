@@ -228,7 +228,7 @@ function init(){
         }
       BulbWhale(){
         this.bulbWhaleSound.currentTime = 0;
-        this.bublWhaleSound.volume = 0.3;
+        this.bulbWhaleSound.volume = 0.3;
         this.bulbWhaleSound.play();
       }
         bgm(){
