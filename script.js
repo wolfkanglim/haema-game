@@ -169,6 +169,7 @@ function init(){
             this.angler1Sound = document.getElementById('angler1_sound');
             this.angler2Sound = document.getElementById('angler2_sound');
             this.hiveWhaleSound = document.getElementById('hive_whale_sound');
+          this.bulbWhaleSound = document.getElementById('bulb_whale_sound');
             this.luckySound = document.getElementById('lucky_sound');
             this.scoreSound = document.getElementById('score');
             this.bgmSound = document.getElementById('bgm');
@@ -225,6 +226,11 @@ function init(){
             this.hiveWhaleSound.volume = 0.3;
             this.hiveWhaleSound.play();
         }
+      BulbWhale(){
+        this.bulbWhaleSound.currentTime = 0;
+        this.bublWhaleSound.volume = 0.3;
+        this.bulbWhaleSound.play();
+      }
         bgm(){
             //this.bgmSound.currentTime = 0;
             this.bgmSound.volume = 0.15;
@@ -950,7 +956,7 @@ function init(){
                 this.sound.angler1();
             } else if(randomNumber < 0.65) {
                 this.enemies.push(new BulbWhale(this));
-                this.sound.HiveWhale();
+                this.sound.BulbWhale();
             } else if(randomNumber < 0.7) {
                 this.enemies.push(new HiveWhale(this));
                 this.sound.HiveWhale();
