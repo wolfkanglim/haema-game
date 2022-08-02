@@ -9,6 +9,7 @@ let slideNumber = document.querySelector(".counter");//
 let toLeftBtn = document.querySelector("#left-btn");
 let toRightBtn = document.querySelector("#right-btn");
 let presentationController = document.querySelector("#presentation-area");
+const angler1_sound = document.getElementById('angler1_sound');
 
 // initialize default values//
 var mouseStatus = 0;
@@ -26,7 +27,7 @@ function setup() {
   //slide_sound.currentTime = 0;
   //slide_sound.volume = 0.12;
   //slide_sound.play();
-  game.sound.angler1();
+  angler1_sound.play();
 }
 
 // handle clicks on left and right icons
