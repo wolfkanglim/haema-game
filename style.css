@@ -152,6 +152,7 @@ h1 {
   }
   .navigation button:hover{
       border: 2px solid #fff;
+  }
   .navigation .nav-btn {
     background: #020202;
     color: #ffffff;
