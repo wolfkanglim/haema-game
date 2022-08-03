@@ -135,7 +135,7 @@ h1 {
   
   #presentation-area .navigation {
     position: absolute;
-    bottom: 1x;
+    bottom: 1px;
     left: 50%;
     z-index: 15;
   }
