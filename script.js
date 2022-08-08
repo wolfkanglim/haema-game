@@ -378,34 +378,39 @@ function init(){
         }
     }
 
-  
-    //mouse click and touch screen shooting and move/////
-    const mousePos = {
-        x: 150,
-        y: 100,
-        click: false
-    }
-    const shootingRect = {
-        x: 0,
-        y: canvas.height * 0.88,
-        width: canvas.width,
-        height: canvas.height * 0.12,
-        click: false
-    }     
-    let canvasPos = canvas.getBoundingClientRect();
-    canvas.addEventListener('click', function (ev){
-        ev.preventDefault();
-        mousePos.x = ev.x - canvasPos.left - 20;
-        mousePos.y = ev.y - canvasPos.top - 20; 
-        if(IsIn(mousePos, shootingRect)){
-            game.player.shootTop();
-        }
+    //////// touch event /////////
+  const touchPos = {
+    x : 150,
+    y : 100,
+    click: false
+  }
+    
+  const canvasPos = canvas.getBoundingClientRect();    
+   
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    ;[...e.changedTouches].forEach(touch => {
+        touchPos.x = touch.pageX - canvasPos.left;
+        touchPos.y = touch.pageY - canvasPos.top;
+        game.player.shootTop();
     })
-    function IsIn(pos, rect){
-        return pos.x > rect.x && pos.x < rect.x + rect.width &&   pos.y > rect.y && pos.y < rect.y + rect.height; 
-    }
+  })
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    ;[...e.changedTouches].forEach(touch => {
+        touchPos.x = touch.pageX - canvasPos.left;
+        touchPos.y = touch.pageY - canvasPos.top;
+        const dx = game.player.x - touchPos.x;
+        const dy = game.player.y - touchPos.y;
+     if(touchPos.x != game.player.x) game.player.x -= dx / 25;
+     if(touchPos.y != game.player.y) game.player.y -= dy / 25;
+    })
+  })
+  canvas.addEventListener('touchend', () => {
+    touchPos.click = false;
+  })
     ////////////////////////
-
+    
     class Player {
         constructor(game){
             this.game = game;
@@ -429,20 +434,6 @@ function init(){
             this.name = 'HAEMA';
         }
         update(deltaTime){
-            //////mouse click and touch screen /////
-           /* if(mousePos.click = true  && !IsIn(mousePos, shootingRect)){
-                const dx = game.player.x - mousePos.x ;
-                const dy = game.player.y - mousePos.y;
-                if(mousePos.x != game.player.x){
-                    game.player.x -= dx / 30;
-                }
-                if(mousePos.y != game.player.y){
-                    game.player.y -= dy / 20;
-                }
-                mousePos.click = false;
-            } */
-            //////////////////////////////////
-
             if(this.game.keys.includes('ArrowDown')) {this.speedY = this.maxSpeed;
             } else if (this.game.keys.includes('ArrowUp')) {
                  this.speedY = - this.maxSpeed;
@@ -991,3 +982,7 @@ function init(){
     }
     //animation(0);
 }
+
+window.addEventListener('resize', function(){
+    canvasPos = canvas.getBoundingClientRect();
+})
