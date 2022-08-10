@@ -385,20 +385,20 @@ function init(){
     click: false
   }
     
+  const canvasPos = canvas.getBoundingClientRect();    
   canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
-      const canvasPos = canvas.getBoundingClientRect();    
     ;[...e.changedTouches].forEach(touch => {
-        touchPos.x = touch.pageX * 800 / canvasPos.width - canvasPos.left;
-        touchPos.y = touch.pageY * 500 / canvasPos.height - canvasPos.top;
+        touchPos.x = (touch.pageX- canvasPos.left) * 800 / canvasPos.width;
+        touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;
         game.player.shootTop();
     })
   })
   canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
     ;[...e.changedTouches].forEach(touch => {
-        touchPos.x = touch.pageX * 800 / canvasPos.width - canvasPos.left;
-        touchPos.y = touch.pageY * 500 / canvasPos.height - canvasPos.top;
+        touchPos.x = (touch.pageX- canvasPos.left) * 800 / canvasPos.width;
+        touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;
         const dx = game.player.x - touchPos.x;
         const dy = game.player.y - touchPos.y;
      if(touchPos.x != game.player.x) game.player.x -= dx / 25;
