@@ -397,7 +397,7 @@ function init(){
     e.preventDefault();
     ;[...e.changedTouches].forEach(touch => {
         touchPos.x = (touch.pageX- canvasPos.left) * 800 / canvasPos.width;
-        touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;
+        touchPos.y = (touch.lclientY - canvasPos.top) * 500 / canvasPos.height;
         game.player.x = touchPos.x;
         game.player.y = touchPos.y;
        
