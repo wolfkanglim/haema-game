@@ -390,8 +390,7 @@ function init(){
       e.preventDefault();
     ;[...e.changedTouches].forEach(touch => {
         touchPos.x = (touch.pageX- canvasPos.left) * 800 / canvasPos.width;
-        touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;
-        game.player.shootTop();
+        touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;       
     })
   })
   canvas.addEventListener('touchmove', (e) => {
@@ -406,6 +405,7 @@ function init(){
   })
   canvas.addEventListener('touchend', () => {
     touchPos.click = false;
+    game.player.shootTop();
   })
     ////////////////////////
     
