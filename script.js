@@ -399,10 +399,9 @@ function init(){
     ;[...e.changedTouches].forEach(touch => {
         touchPos.x = (touch.pageX- canvasPos.left) * 800 / canvasPos.width;
         touchPos.y = (touch.pageY - canvasPos.top) * 500 / canvasPos.height;
-        const dx = game.player.x - touchPos.x;
-        const dy = game.player.y - touchPos.y;
-     if(touchPos.x != game.player.x) game.player.x -= dx / 25;
-     if(touchPos.y != game.player.y) game.player.y -= dy / 25;
+        game.player.x = touchPos.x;
+        game.player.y = touchPos.y;
+       
     })
   })
   canvas.addEventListener('touchend', () => {
